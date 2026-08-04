@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tax Investigation — Document Request</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #EAF2FB;
+  color: #0D2A4A;
+  min-height: 100vh;
+  padding: 32px 0 52px;
+}
+
+.page-wrap { max-width: 1300px; margin: 0 auto; padding: 0 32px; }
+
+/* ══ HEADER ══ */
+.page-header { text-align: center; margin-bottom: 22px; }
+.page-badge {
+  display: inline-block;
+  background: rgba(26,95,171,0.1); border: 1px solid rgba(26,95,171,0.35);
+  color: #1A5FAB; font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  padding: 4px 16px; border-radius: 20px; margin-bottom: 12px;
+}
+.page-title { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+.page-title span { color: #1A5FAB; }
+.page-desc { font-size: 12.5px; color: #4a6a8a; line-height: 1.65; max-width: 760px; margin: 0 auto; }
+
+/* ══ 4-WAY BANNER ══ */
+.concept-bar {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 8px;
+  background: #fff; border: 1px solid rgba(26,95,171,0.18);
+  border-radius: 10px; padding: 11px 20px; margin-bottom: 28px;
+  box-shadow: 0 1px 4px rgba(13,42,74,0.07);
+}
+.cpill {
+  display: flex; align-items: center; gap: 6px;
+  border-radius: 20px; padding: 4px 13px;
+  font-size: 11.5px; font-weight: 700;
+}
+.cpill-c { background: rgba(26,95,171,0.08);  color: #1A5FAB; border: 1px solid rgba(26,95,171,0.25); }
+.cpill-i { background: rgba(211,84,0,0.08);   color: #c0521a; border: 1px solid rgba(211,84,0,0.25); }
+.cpill-p { background: rgba(125,60,152,0.08); color: #7d3c98; border: 1px solid rgba(125,60,152,0.25); }
+.cpill-l { background: rgba(20,120,60,0.08);  color: #1a7a3c; border: 1px solid rgba(20,120,60,0.25); }
+.csep { color: #aaa; font-size: 15px; }
+.cresult {
+  background: rgba(26,95,171,0.06); color: #1A5FAB;
+  border: 1.5px solid rgba(26,95,171,0.3);
+  border-radius: 20px; padding: 4px 13px;
+  font-size: 11.5px; font-weight: 700;
+}
+
+/* ══ TWO-COLUMN LAYOUT ══ */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 90px 1fr;
+  gap: 0;
+  align-items: start;
+}
+
+.side-col { display: flex; flex-direction: column; align-items: center; gap: 0; }
+
+.side-header {
+  align-self: stretch;
+  display: flex; align-items: center; gap: 9px;
+  padding: 10px 14px; border-radius: 9px; margin-bottom: 14px;
+}
+.side-header.sh-s { background: rgba(26,95,171,0.07); border-left: 4px solid #1A5FAB; }
+.side-header.sh-p { background: rgba(30,132,73,0.07);  border-left: 4px solid #1e8449; }
+.sh-icon  { font-size: 18px; flex-shrink: 0; }
+.sh-title { font-size: 14px; font-weight: 700; }
+.sh-sub   { font-size: 10.5px; color: #5a7a9a; margin-top: 2px; }
+
+/* ══ CENTER COLUMN ══ */
+.center-col {
+  display: flex; flex-direction: column; align-items: center;
+  padding-top: 56px;
+}
+.sku-bridge {
+  background: #fff;
+  border: 1.5px dashed rgba(26,95,171,0.4);
+  border-radius: 12px;
+  padding: 14px 10px;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 5px; text-align: center;
+  box-shadow: 0 1px 5px rgba(13,42,74,0.07);
+}
+.sku-icon  { font-size: 20px; }
+.sku-label { font-size: 9.5px; font-weight: 700; color: #1A5FAB; letter-spacing: 0.5px; text-transform: uppercase; }
+.sku-arrows { font-size: 13px; color: #1A5FAB; opacity: 0.55; }
+.sku-sub   { font-size: 9px; color: #7a9ab8; line-height: 1.4; }
+.center-line { width: 2px; flex: 1; min-height: 40px; background: linear-gradient(180deg,#99aabb33,transparent); }
+
+/* ══ FLOW NODE ══ */
+.flow-node {
+  align-self: stretch;
+  background: #fff;
+  border-radius: 12px;
+  border: 2px solid rgba(26,95,171,0.15);
+  box-shadow: 0 2px 8px rgba(13,42,74,0.07);
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  cursor: pointer;
+}
+.flow-node:hover       { border-color: rgba(26,95,171,0.45); box-shadow: 0 4px 16px rgba(26,95,171,0.13); transform: translateY(-1px); }
+.flow-node.open        { border-color: #1A5FAB; box-shadow: 0 4px 16px rgba(26,95,171,0.16); }
+.flow-node.pnode       { border-color: rgba(30,132,73,0.15); }
+.flow-node.pnode:hover { border-color: rgba(30,132,73,0.5); box-shadow: 0 4px 16px rgba(30,132,73,0.12); }
+.flow-node.pnode.open  { border-color: #1e8449; box-shadow: 0 4px 16px rgba(30,132,73,0.15); }
+.flow-node.cnode       { border-color: rgba(169,50,38,0.15); }
+.flow-node.cnode:hover { border-color: rgba(169,50,38,0.5); box-shadow: 0 4px 16px rgba(169,50,38,0.1); }
+.flow-node.cnode.open  { border-color: #a93226; box-shadow: 0 4px 16px rgba(169,50,38,0.13); }
+
+.node-trigger {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px; user-select: none;
+}
+.node-badge {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10.5px; font-weight: 700; border: 1.5px solid;
+}
+.badge-s { background: rgba(26,95,171,0.1); color: #1A5FAB; border-color: rgba(26,95,171,0.3); }
+.badge-p { background: rgba(30,132,73,0.1);  color: #1e8449; border-color: rgba(30,132,73,0.3); }
+.badge-c { background: rgba(169,50,38,0.09); color: #a93226; border-color: rgba(169,50,38,0.3); }
+
+.node-text { flex: 1; min-width: 0; }
+.node-title { font-size: 12.5px; font-weight: 700; color: #0D2A4A; line-height: 1.3; }
+.node-sub   { font-size: 10px; color: #5a7a9a; margin-top: 2px; line-height: 1.3; }
+.node-owners { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 5px; }
+
+.node-dots { display: flex; gap: 3px; flex-shrink: 0; }
+.dim-dot { width: 7px; height: 7px; border-radius: 50%; }
+.dd-c { background: #1A5FAB; }
+.dd-i { background: #d35400; }
+.dd-p { background: #7d3c98; }
+.dd-l { background: #1a7a3c; }
+.dd-n { background: #ccc; opacity: 0.35; }
+
+.node-chevron { font-size: 10px; color: #aac; transition: transform 0.25s; flex-shrink: 0; }
+.flow-node.open .node-chevron { transform: rotate(90deg); }
+
+/* ══ NODE BODY ══ */
+.node-body {
+  display: none;
+  padding: 0 14px 14px;
+  animation: fadeSlide 0.2s ease;
+  border-top: 1px dashed rgba(26,95,171,0.13);
+}
+.flow-node.pnode .node-body { border-top-color: rgba(30,132,73,0.13); }
+.flow-node.cnode .node-body { border-top-color: rgba(169,50,38,0.13); }
+.flow-node.open  .node-body { display: block; }
+
+@keyframes fadeSlide {
+  from { opacity:0; transform:translateY(-4px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* 4 dim blocks — only render blocks that have content */
+.dim-grid {
+  display: flex; flex-wrap: wrap; gap: 7px;
+  margin-top: 12px;
+}
+.dim-block {
+  flex: 1 1 calc(50% - 4px);
+  min-width: 0;
+  border-radius: 8px; padding: 9px 10px;
+}
+.db-c { background: rgba(26,95,171,0.05);  border: 1px solid rgba(26,95,171,0.17); }
+.db-i { background: rgba(211,84,0,0.05);   border: 1px solid rgba(211,84,0,0.17); }
+.db-p { background: rgba(125,60,152,0.05); border: 1px solid rgba(125,60,152,0.17); }
+.db-l { background: rgba(20,120,60,0.05);  border: 1px solid rgba(20,120,60,0.17); }
+
+.dim-label {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; margin-bottom: 7px;
+}
+.db-c .dim-label { color: #1A5FAB; }
+.db-i .dim-label { color: #c0521a; }
+.db-p .dim-label { color: #7d3c98; }
+.db-l .dim-label { color: #1a7a3c; }
+.dim-label-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+
+.doc-line {
+  display: flex; align-items: flex-start; gap: 5px;
+  padding: 4px 0; border-top: 1px solid rgba(0,0,0,0.05);
+}
+.doc-line:first-of-type { border-top: none; }
+.doc-line-icon { flex-shrink: 0; font-size: 12px; line-height: 1.5; }
+.doc-line-name { font-size: 10.5px; font-weight: 600; color: #0D2A4A; line-height: 1.3; }
+.doc-line-note { font-size: 10px; color: #5a7a9a; line-height: 1.35; margin-top: 2px; }
+.doc-line-tags { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 3px; }
+
+.dtag { font-size: 9px; font-weight: 600; padding: 1px 5px; border-radius: 5px; }
+.dtag-req  { background: rgba(192,57,43,0.08); color: #c0392b; border:1px solid rgba(192,57,43,0.2); }
+.dtag-cond { background: rgba(211,84,0,0.08);  color: #d35400; border:1px solid rgba(211,84,0,0.2); }
+.dtag-sys  { background: rgba(26,95,171,0.08); color: #1A5FAB; border:1px solid rgba(26,95,171,0.2); }
+
+.owner-tag { display: inline-block; padding: 1px 6px; border-radius: 7px; font-size: 9.5px; font-weight: 600; }
+.ot-cs  { background:rgba(125,60,152,0.1);  color:#7d3c98; border:1px solid rgba(125,60,152,0.25); }
+.ot-wh  { background:rgba(186,74,0,0.1);    color:#ba4a00; border:1px solid rgba(186,74,0,0.25); }
+.ot-tax { background:rgba(26,95,171,0.1);   color:#1A5FAB; border:1px solid rgba(26,95,171,0.25); }
+.ot-i2c { background:rgba(20,110,60,0.1);   color:#1e8449; border:1px solid rgba(20,110,60,0.25); }
+.ot-ie  { background:rgba(169,50,38,0.1);   color:#a93226; border:1px solid rgba(169,50,38,0.25); }
+.ot-ap  { background:rgba(21,101,192,0.1);  color:#1565c0; border:1px solid rgba(21,101,192,0.25); }
+.ot-ic  { background:rgba(175,96,0,0.1);    color:#af6000; border:1px solid rgba(175,96,0,0.25); }
+.ot-vd  { background:rgba(80,90,100,0.1);   color:#505a64; border:1px solid rgba(80,90,100,0.2); }
+
+/* ══ ARROWS ══ */
+.flow-arrow { display: flex; flex-direction: column; align-items: center; }
+.arr-line { width: 2px; height: 18px; }
+.arr-line.blue  { background: linear-gradient(180deg,#1A5FAB55,#1A5FAB33); }
+.arr-line.green { background: linear-gradient(180deg,#1e844955,#1e844933); }
+.arr-line.red   { background: linear-gradient(180deg,#a9322655,#a9322633); }
+.arr-head { width:0; height:0; border-left:5px solid transparent; border-right:5px solid transparent; }
+.arr-head.blue  { border-top:7px solid #1A5FAB88; }
+.arr-head.green { border-top:7px solid #1e844988; }
+.arr-head.red   { border-top:7px solid #a9322688; }
+
+.flow-end {
+  align-self: stretch;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 9px 12px; border-radius: 9px;
+  font-size: 11px; font-weight: 700;
+}
+.fe-blue  { background: rgba(26,95,171,0.07); border:1.5px solid rgba(26,95,171,0.3); color:#1A5FAB; }
+.fe-green { background: rgba(30,132,73,0.07); border:1.5px solid rgba(30,132,73,0.3); color:#1e8449; }
+
+/* ══ LEGEND ══ */
+.legend {
+  display: flex; flex-wrap: wrap; gap: 7px; justify-content: center;
+  margin-top: 28px; padding: 12px 20px;
+  background: #fff; border: 1px solid rgba(26,95,171,0.15);
+  border-radius: 8px; box-shadow: 0 1px 3px rgba(13,42,74,0.06);
+}
+.legend-title { width:100%; text-align:center; font-size:10px; color:#8aa; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:3px; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+<div class="page-header">
+  <div class="page-badge">Tax Team — Audit Walk-through</div>
+  <h1 class="page-title">Tax Investigation — <span>Document Request</span></h1>
+  <p class="page-desc">
+    Starting from the <strong style="color:#1A5FAB">Sales Invoice</strong> (left), linked to the
+    <strong style="color:#1e8449">Purchase side</strong> (right) via SKU.
+    Each step is reviewed across four dimensions: <strong>Contract · Invoice · Payment · Logistics</strong>.
+    Click any step to expand.
+  </p>
+</div>
+
+<div class="concept-bar">
+  <span style="font-size:11px;color:#7a9ab8;font-weight:600;letter-spacing:1px;margin-right:4px;">4-Dimension Framework</span>
+  <div class="cpill cpill-c">📄 Contract</div>
+  <span class="csep">+</span>
+  <div class="cpill cpill-i">🧾 Invoice</div>
+  <span class="csep">+</span>
+  <div class="cpill cpill-p">💰 Payment</div>
+  <span class="csep">+</span>
+  <div class="cpill cpill-l">🚚 Logistics</div>
+  <span class="csep">=</span>
+  <div class="cresult">✔ Complete Audit Trail</div>
+</div>
+
+<div class="two-col">
+
+  <!-- ████ LEFT — SALES ████ -->
+  <div class="side-col">
+    <div class="side-header sh-s">
+      <span class="sh-icon">📤</span>
+      <div>
+        <div class="sh-title">Sales Side</div>
+        <div class="sh-sub">Starting point: Sales Invoice → trace back to contract, logistics & customer payment</div>
+      </div>
+    </div>
+
+    <!-- S1 -->
+    <div class="flow-node" id="s1" onclick="toggle('s1')">
+      <div class="node-trigger">
+        <div class="node-badge badge-s">S1</div>
+        <div class="node-text">
+          <div class="node-title">Sales Invoice</div>
+          <div class="node-sub">Anchor document — all other items must match this</div>
+          <div class="node-owners"><span class="owner-tag ot-tax">Tax (self-query)</span></div>
+        </div>
+        <div class="node-dots">
+          <div class="dim-dot dd-n"></div><div class="dim-dot dd-i"></div>
+          <div class="dim-dot dd-n"></div><div class="dim-dot dd-n"></div>
+        </div>
+        <span class="node-chevron">▶</span>
+      </div>
+      <div class="node-body">
+        <div class="dim-grid">
+          <div class="dim-block db-i">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#d35400"></span>Invoice</div>
+            <div class="doc-line"><span class="doc-line-icon">🧾</span><div><div class="doc-line-name">VAT Sales Invoice (增值税发票)</div><div class="doc-line-note">Invoice no., date, buyer name & tax ID, SKU, taxable amount, VAT amount</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span><span class="dtag dtag-sys">Tax system</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">📋</span><div><div class="doc-line-name">Invoice Dispatch Record</div><div class="doc-line-note">Courier tracking or email log proving invoice was sent to buyer</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-arrow"><div class="arr-line blue"></div><div class="arr-head blue"></div></div>
+
+    <!-- S2 -->
+    <div class="flow-node" id="s2" onclick="toggle('s2')">
+      <div class="node-trigger">
+        <div class="node-badge badge-s">S2</div>
+        <div class="node-text">
+          <div class="node-title">Sales Contract / Sales Order</div>
+          <div class="node-sub">Confirms commercial terms; must align with invoice amount & SKU</div>
+          <div class="node-owners"><span class="owner-tag ot-cs">Customer Service</span></div>
+        </div>
+        <div class="node-dots">
+          <div class="dim-dot dd-c"></div><div class="dim-dot dd-n"></div>
+          <div class="dim-dot dd-n"></div><div class="dim-dot dd-n"></div>
+        </div>
+        <span class="node-chevron">▶</span>
+      </div>
+      <div class="node-body">
+        <div class="dim-grid">
+          <div class="dim-block db-c">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#1A5FAB"></span>Contract</div>
+            <div class="doc-line"><span class="doc-line-icon">📄</span><div><div class="doc-line-name">Sales Order (SO) or Sales Contract Agreement</div><div class="doc-line-note">Either SAP SO or signed sales contract is acceptable; confirms customer, SKU, qty, price and commercial terms</div><div class="doc-line-tags"><span class="dtag dtag-cond">One of the two</span></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-arrow"><div class="arr-line blue"></div><div class="arr-head blue"></div></div>
+
+    <!-- S3 -->
+    <div class="flow-node" id="s3" onclick="toggle('s3')">
+      <div class="node-trigger">
+        <div class="node-badge badge-s">S3</div>
+        <div class="node-text">
+          <div class="node-title">Outbound Delivery & Logistics</div>
+          <div class="node-sub">Goods dispatched from warehouse, delivered to customer</div>
+          <div class="node-owners"><span class="owner-tag ot-wh">Warehouse</span><span class="owner-tag ot-ap">AP Team</span></div>
+        </div>
+        <div class="node-dots">
+          <div class="dim-dot dd-c"></div><div class="dim-dot dd-i"></div>
+          <div class="dim-dot dd-p"></div><div class="dim-dot dd-l"></div>
+        </div>
+        <span class="node-chevron">▶</span>
+      </div>
+      <div class="node-body">
+        <div class="dim-grid">
+          <div class="dim-block db-c">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#1A5FAB"></span>Contract</div>
+            <div class="doc-line"><span class="doc-line-icon">🚚</span><div><div class="doc-line-name">Logistics Service Agreement</div><div class="doc-line-note">Transport contract or framework agreement with the carrier</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">📦</span><div><div class="doc-line-name">Delivery Note (DN)</div><div class="doc-line-note">Issued at shipment; SKU, qty, delivery address — must match sales invoice</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+          </div>
+          <div class="dim-block db-i">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#d35400"></span>Invoice</div>
+            <div class="doc-line"><span class="doc-line-icon">🧾</span><div><div class="doc-line-name">Freight Invoice from Carrier</div><div class="doc-line-note">VAT invoice from carrier covering freight charges</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+          </div>
+          <div class="dim-block db-p">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#7d3c98"></span>Payment</div>
+            <div class="doc-line"><span class="doc-line-icon">💰</span><div><div class="doc-line-name">Freight Payment Record</div><div class="doc-line-note">Payment proof to carrier + carrier reconciliation statement</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span><span class="dtag dtag-sys">Provided by AP</span></div></div></div>
+          </div>
+          <div class="dim-block db-l">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#1a7a3c"></span>Logistics</div>
+            <div class="doc-line"><span class="doc-line-icon">📍</span><div><div class="doc-line-name">Waybill / Carrier Tracking Record</div><div class="doc-line-note">Tracking number and carrier confirmation — proves goods left warehouse</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">✅</span><div><div class="doc-line-name">Customer Sign-off / POD</div><div class="doc-line-note">Signed acknowledgement from customer confirming receipt of goods</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-arrow"><div class="arr-line blue"></div><div class="arr-head blue"></div></div>
+
+    <!-- S4 -->
+    <div class="flow-node" id="s4" onclick="toggle('s4')">
+      <div class="node-trigger">
+        <div class="node-badge badge-s">S4</div>
+        <div class="node-text">
+          <div class="node-title">Customer Payment</div>
+          <div class="node-sub">Confirm full receipt; AR balance cleared</div>
+          <div class="node-owners"><span class="owner-tag ot-i2c">I2C Team</span></div>
+        </div>
+        <div class="node-dots">
+          <div class="dim-dot dd-n"></div><div class="dim-dot dd-n"></div>
+          <div class="dim-dot dd-p"></div><div class="dim-dot dd-n"></div>
+        </div>
+        <span class="node-chevron">▶</span>
+      </div>
+      <div class="node-body">
+        <div class="dim-grid">
+          <div class="dim-block db-p">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#7d3c98"></span>Payment</div>
+            <div class="doc-line"><span class="doc-line-icon">🏦</span><div><div class="doc-line-name">Bank Receipt & AR Clearing Record</div><div class="doc-line-note">Bank receipt of customer's incoming payment + SAP AR clearing record confirming receivable is settled</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-arrow"><div class="arr-line blue"></div><div class="arr-head blue"></div></div>
+    <div class="flow-end fe-blue">✔ Sales Chain Complete</div>
+  </div>
+
+  <!-- ████ CENTER ████ -->
+  <div class="center-col">
+    <div class="center-line"></div>
+    <div class="sku-bridge">
+      <span class="sku-icon">🔗</span>
+      <div class="sku-label">SKU Link</div>
+      <div class="sku-arrows">← →</div>
+      <div class="sku-sub">Trace purchase<br>by item no.</div>
+    </div>
+    <div class="center-line"></div>
+  </div>
+
+  <!-- ████ RIGHT — PURCHASE ████ -->
+  <div class="side-col">
+    <div class="side-header sh-p">
+      <span class="sh-icon">📥</span>
+      <div>
+        <div class="sh-title">Purchase Side</div>
+        <div class="sh-sub">Trace from invoice SKU → PO, import & customs, vendor payment</div>
+      </div>
+    </div>
+
+    <!-- P1 -->
+    <div class="flow-node pnode" id="p1" onclick="toggle('p1')">
+      <div class="node-trigger">
+        <div class="node-badge badge-p">P1</div>
+        <div class="node-text">
+          <div class="node-title">Purchase Order (PO)</div>
+          <div class="node-sub">Linked to same SKU on sales invoice; price must align with customs value</div>
+          <div class="node-owners"><span class="owner-tag ot-cs">Planner</span></div>
+        </div>
+        <div class="node-dots">
+          <div class="dim-dot dd-c"></div><div class="dim-dot dd-n"></div>
+          <div class="dim-dot dd-n"></div><div class="dim-dot dd-n"></div>
+        </div>
+        <span class="node-chevron">▶</span>
+      </div>
+      <div class="node-body">
+        <div class="dim-grid">
+          <div class="dim-block db-c">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#1A5FAB"></span>Contract</div>
+            <div class="doc-line"><span class="doc-line-icon">🛒</span><div><div class="doc-line-name">Purchase Order (PO)</div><div class="doc-line-note">Supplier name, PO no., item, qty, price — must align with customs declared value</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-arrow"><div class="arr-line green"></div><div class="arr-head green"></div></div>
+
+    <!-- P2 -->
+    <div class="flow-node cnode" id="p2" onclick="toggle('p2')">
+      <div class="node-trigger">
+        <div class="node-badge badge-c">P2</div>
+        <div class="node-text">
+          <div class="node-title">Import & Customs</div>
+          <div class="node-sub">Broker agreement → customs invoice → broker fee payment → transport docs</div>
+          <div class="node-owners"><span class="owner-tag ot-ie">IE / Import-Export</span></div>
+        </div>
+        <div class="node-dots">
+          <div class="dim-dot dd-c"></div><div class="dim-dot dd-i"></div>
+          <div class="dim-dot dd-p"></div><div class="dim-dot dd-l"></div>
+        </div>
+        <span class="node-chevron">▶</span>
+      </div>
+      <div class="node-body">
+        <div class="dim-grid">
+          <div class="dim-block db-c">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#1A5FAB"></span>Contract</div>
+            <div class="doc-line"><span class="doc-line-icon">🏢</span><div><div class="doc-line-name">Customs Broker Service Agreement</div><div class="doc-line-note">Broker qualification certificate and service contract</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">🛃</span><div><div class="doc-line-name">Customs Declaration Form (报关单)</div><div class="doc-line-note">China Customs-stamped; HS code, declared value, duty rate — must match PO</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+          </div>
+          <div class="dim-block db-i">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#d35400"></span>Invoice</div>
+            <div class="doc-line"><span class="doc-line-icon">🧾</span><div><div class="doc-line-name">Customs Broker Service Fee Invoice</div><div class="doc-line-note">VAT invoice from broker for clearance service; must match payment amount</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+          </div>
+          <div class="dim-block db-p">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#7d3c98"></span>Payment</div>
+            <div class="doc-line"><span class="doc-line-icon">💳</span><div><div class="doc-line-name">Broker Fee Payment Record</div><div class="doc-line-note">Bank proof of service fee paid to customs broker</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">📊</span><div><div class="doc-line-name">Broker Reconciliation Statement</div><div class="doc-line-note">Statement confirming all charges are settled</div><div class="doc-line-tags"><span class="dtag dtag-cond">Request from broker</span></div></div></div>
+          </div>
+          <div class="dim-block db-l">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#1a7a3c"></span>Logistics</div>
+            <div class="doc-line"><span class="doc-line-icon">🚢</span><div><div class="doc-line-name">Bill of Lading (B/L) or Airway Bill (AWB)</div><div class="doc-line-note">Original transport document proving shipment from overseas supplier</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">🚛</span><div><div class="doc-line-name">Port-to-Warehouse Inland Delivery Record</div><div class="doc-line-note">Domestic leg waybill and delivery confirmation after clearance</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-arrow"><div class="arr-line green"></div><div class="arr-head green"></div></div>
+
+    <!-- P3 -->
+    <div class="flow-node pnode" id="p3" onclick="toggle('p3')">
+      <div class="node-trigger">
+        <div class="node-badge badge-p">P3</div>
+        <div class="node-text">
+          <div class="node-title">Customs Duty & Import VAT Invoice</div>
+          <div class="node-sub">Official customs invoice; supports VAT input credit and cost deduction</div>
+          <div class="node-owners"><span class="owner-tag ot-ap">AP Team</span></div>
+        </div>
+        <div class="node-dots">
+          <div class="dim-dot dd-n"></div><div class="dim-dot dd-i"></div>
+          <div class="dim-dot dd-n"></div><div class="dim-dot dd-n"></div>
+        </div>
+        <span class="node-chevron">▶</span>
+      </div>
+      <div class="node-body">
+        <div class="dim-grid">
+          <div class="dim-block db-i">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#d35400"></span>Invoice</div>
+            <div class="doc-line"><span class="doc-line-icon">🧾</span><div><div class="doc-line-name">Customs Duty & Import VAT Invoice</div><div class="doc-line-note">Official invoice from China Customs; supports input VAT credit and cost deduction</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-arrow"><div class="arr-line green"></div><div class="arr-head green"></div></div>
+
+    <!-- P4 -->
+    <div class="flow-node pnode" id="p4" onclick="toggle('p4')">
+      <div class="node-trigger">
+        <div class="node-badge badge-p">P4</div>
+        <div class="node-text">
+          <div class="node-title">Goods Receipt & Invoice Booking</div>
+          <div class="node-sub">PO / GR / IR matching + logistics service provider invoice & payment</div>
+          <div class="node-owners"><span class="owner-tag ot-wh">Warehouse</span><span class="owner-tag ot-ap">AP Team</span><span class="owner-tag ot-ic">ICO</span></div>
+        </div>
+        <div class="node-dots">
+          <div class="dim-dot dd-c"></div><div class="dim-dot dd-i"></div>
+          <div class="dim-dot dd-p"></div><div class="dim-dot dd-l"></div>
+        </div>
+        <span class="node-chevron">▶</span>
+      </div>
+      <div class="node-body">
+
+        <div style="font-size:10px;font-weight:700;color:#5a7a9a;text-transform:uppercase;letter-spacing:1px;margin:12px 0 6px;">Part A — PO / GR / IR</div>
+        <div class="dim-grid">
+          <div class="dim-block db-i">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#d35400"></span>Invoice</div>
+            <div class="doc-line"><span class="doc-line-icon">📋</span><div><div class="doc-line-name">Inventory Receipt (IR) Booking Record</div><div class="doc-line-note">ICO system record: item, qty, cost, posting date — links PO receipt to stock movement</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span><span class="dtag dtag-sys">ICO</span></div></div></div>
+          </div>
+          <div class="dim-block db-l">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#1a7a3c"></span>Logistics</div>
+            <div class="doc-line"><span class="doc-line-icon">📦</span><div><div class="doc-line-name">Warehouse Goods Receipt Record (GR)</div><div class="doc-line-note">Warehouse confirmation: item, qty, receipt date, storage location</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span><span class="dtag dtag-sys">Warehouse</span></div></div></div>
+          </div>
+        </div>
+
+        <div style="font-size:10px;font-weight:700;color:#5a7a9a;text-transform:uppercase;letter-spacing:1px;margin:14px 0 6px;">Part B — Logistics Service Provider</div>
+        <div class="dim-grid">
+          <div class="dim-block db-c">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#1A5FAB"></span>Contract</div>
+            <div class="doc-line"><span class="doc-line-icon">📄</span><div><div class="doc-line-name">Logistics Service Agreement</div><div class="doc-line-note">Signed contract with logistics service provider covering inbound handling and delivery</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+          </div>
+          <div class="dim-block db-i">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#d35400"></span>Invoice</div>
+            <div class="doc-line"><span class="doc-line-icon">🧾</span><div><div class="doc-line-name">Logistics Service Fee Invoice</div><div class="doc-line-note">VAT invoice issued by logistics provider for inbound handling services</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+          </div>
+          <div class="dim-block db-p">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#7d3c98"></span>Payment</div>
+            <div class="doc-line"><span class="doc-line-icon">💳</span><div><div class="doc-line-name">Logistics Service Fee Payment Record</div><div class="doc-line-note">Bank proof of payment to logistics provider; must match invoice amount</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="flow-arrow"><div class="arr-line green"></div><div class="arr-head green"></div></div>
+
+    <!-- P5 -->
+    <div class="flow-node pnode" id="p5" onclick="toggle('p5')">
+      <div class="node-trigger">
+        <div class="node-badge badge-p">P5</div>
+        <div class="node-text">
+          <div class="node-title">Vendor Payment</div>
+          <div class="node-sub">Payment to goods supplier</div>
+          <div class="node-owners"><span class="owner-tag ot-ic">ICO</span></div>
+        </div>
+        <div class="node-dots">
+          <div class="dim-dot dd-n"></div><div class="dim-dot dd-n"></div>
+          <div class="dim-dot dd-p"></div><div class="dim-dot dd-n"></div>
+        </div>
+        <span class="node-chevron">▶</span>
+      </div>
+      <div class="node-body">
+        <div class="dim-grid">
+          <div class="dim-block db-p">
+            <div class="dim-label"><span class="dim-label-dot" style="background:#7d3c98"></span>Payment</div>
+            <div class="doc-line"><span class="doc-line-icon">💳</span><div><div class="doc-line-name">Bank Remittance Advice</div><div class="doc-line-note">Bank-stamped outbound payment record — payee, amount, date, bank reference; must match supplier invoice</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">📊</span><div><div class="doc-line-name">Vendor AP Reconciliation Statement</div><div class="doc-line-note">Vendor confirmation of payment history and outstanding balance</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-arrow"><div class="arr-line green"></div><div class="arr-head green"></div></div>
+    <div class="flow-end fe-green">✔ Purchase Chain Complete</div>
+  </div>
+
+</div><!-- /two-col -->
+
+<div class="legend">
+  <div class="legend-title">Department Responsible</div>
+  <span class="owner-tag ot-tax">Tax (self-query)</span>
+  <span class="owner-tag ot-cs">Customer Service</span>
+  <span class="owner-tag ot-wh">Warehouse</span>
+  <span class="owner-tag ot-ap">AP Team</span>
+  <span class="owner-tag ot-i2c">I2C Team</span>
+  <span class="owner-tag ot-ie">IE / Import-Export</span>
+  <span class="owner-tag ot-ic">ICO</span>
+  <span class="owner-tag ot-cs">Planner</span>
+
+</div>
+
+</div>
+<script>
+let openCard = null;
+function toggle(id) {
+  const card = document.getElementById(id);
+  if (openCard && openCard !== card) openCard.classList.remove('open');
+  card.classList.toggle('open');
+  openCard = card.classList.contains('open') ? card : null;
+  if (openCard) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+</script>
+</body>
+</html>
