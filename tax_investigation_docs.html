@@ -40,7 +40,7 @@ body {
 .cpill {
   display: flex; align-items: center; gap: 6px;
   border-radius: 20px; padding: 4px 13px;
-  font-size: 11.5px; font-weight: 700;
+  font-size: 12px; font-weight: 700;
 }
 .cpill-c { background: rgba(26,95,171,0.08);  color: #1A5FAB; border: 1px solid rgba(26,95,171,0.25); }
 .cpill-i { background: rgba(211,84,0,0.08);   color: #c0521a; border: 1px solid rgba(211,84,0,0.25); }
@@ -51,7 +51,7 @@ body {
   background: rgba(26,95,171,0.06); color: #1A5FAB;
   border: 1.5px solid rgba(26,95,171,0.3);
   border-radius: 20px; padding: 4px 13px;
-  font-size: 11.5px; font-weight: 700;
+  font-size: 12px; font-weight: 700;
 }
 
 /* ══ TWO-COLUMN LAYOUT ══ */
@@ -120,16 +120,17 @@ body {
   padding: 12px 14px; user-select: none;
 }
 .node-badge {
-  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
-  font-size: 10.5px; font-weight: 700; border: 1.5px solid;
+  font-size: 16px; border: 1.5px solid;
 }
-.badge-s { background: rgba(26,95,171,0.1); color: #1A5FAB; border-color: rgba(26,95,171,0.3); }
-.badge-p { background: rgba(30,132,73,0.1);  color: #1e8449; border-color: rgba(30,132,73,0.3); }
-.badge-c { background: rgba(169,50,38,0.09); color: #a93226; border-color: rgba(169,50,38,0.3); }
+.badge-invoice  { background: rgba(211,84,0,0.1);    border-color: rgba(211,84,0,0.35); }
+.badge-contract { background: rgba(26,95,171,0.1);   border-color: rgba(26,95,171,0.35); }
+.badge-logistics{ background: rgba(26,122,60,0.1);   border-color: rgba(26,122,60,0.35); }
+.badge-payment  { background: rgba(125,60,152,0.1);  border-color: rgba(125,60,152,0.35); }
 
 .node-text { flex: 1; min-width: 0; }
-.node-title { font-size: 12.5px; font-weight: 700; color: #0D2A4A; line-height: 1.3; }
+.node-title { font-size: 12px; font-weight: 700; color: #0D2A4A; line-height: 1.3; }
 .node-sub   { font-size: 10px; color: #5a7a9a; margin-top: 2px; line-height: 1.3; }
 .node-owners { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 5px; }
 
@@ -283,11 +284,11 @@ body {
     <!-- S1 -->
     <div class="flow-node" id="s1" onclick="toggle('s1')">
       <div class="node-trigger">
-        <div class="node-badge badge-s">S1</div>
+        <div class="node-badge badge-invoice">🧾</div>
         <div class="node-text">
-          <div class="node-title">Sales Invoice</div>
+          <div class="node-title" style="color:#c0521a;">Sales Invoice</div>
           <div class="node-sub">Anchor document — all other items must match this</div>
-          <div class="node-owners"><span class="owner-tag ot-tax">Tax (self-query)</span></div>
+          <div class="node-owners"><span class="owner-tag ot-tax">Tax Team</span></div>
         </div>
         <div class="node-dots">
           <div class="dim-dot dd-n"></div><div class="dim-dot dd-i"></div>
@@ -311,9 +312,9 @@ body {
     <!-- S2 -->
     <div class="flow-node" id="s2" onclick="toggle('s2')">
       <div class="node-trigger">
-        <div class="node-badge badge-s">S2</div>
+        <div class="node-badge badge-contract">📄</div>
         <div class="node-text">
-          <div class="node-title">Sales Contract / Sales Order</div>
+          <div class="node-title" style="color:#1A5FAB;">Sales Contract / Sales Order</div>
           <div class="node-sub">Confirms commercial terms; must align with invoice amount & SKU</div>
           <div class="node-owners"><span class="owner-tag ot-cs">Customer Service</span></div>
         </div>
@@ -338,9 +339,9 @@ body {
     <!-- S3 -->
     <div class="flow-node" id="s3" onclick="toggle('s3')">
       <div class="node-trigger">
-        <div class="node-badge badge-s">S3</div>
+        <div class="node-badge badge-logistics">🚚</div>
         <div class="node-text">
-          <div class="node-title">Outbound Delivery & Logistics</div>
+          <div class="node-title" style="color:#1a7a3c;">Outbound Delivery & Logistics</div>
           <div class="node-sub">Goods dispatched from warehouse, delivered to customer</div>
           <div class="node-owners"><span class="owner-tag ot-wh">Warehouse</span><span class="owner-tag ot-ap">AP Team</span></div>
         </div>
@@ -380,9 +381,9 @@ body {
     <!-- S4 -->
     <div class="flow-node" id="s4" onclick="toggle('s4')">
       <div class="node-trigger">
-        <div class="node-badge badge-s">S4</div>
+        <div class="node-badge badge-payment">💰</div>
         <div class="node-text">
-          <div class="node-title">Customer Payment</div>
+          <div class="node-title" style="color:#7d3c98;">Customer Payment</div>
           <div class="node-sub">Confirm full receipt; AR balance cleared</div>
           <div class="node-owners"><span class="owner-tag ot-i2c">I2C Team</span></div>
         </div>
@@ -431,9 +432,9 @@ body {
     <!-- P1 -->
     <div class="flow-node pnode" id="p1" onclick="toggle('p1')">
       <div class="node-trigger">
-        <div class="node-badge badge-p">P1</div>
+        <div class="node-badge badge-contract">📄</div>
         <div class="node-text">
-          <div class="node-title">Purchase Order (PO)</div>
+          <div class="node-title" style="color:#1A5FAB;">Purchase Order (PO)</div>
           <div class="node-sub">Linked to same SKU on sales invoice; price must align with customs value</div>
           <div class="node-owners"><span class="owner-tag ot-cs">Planner</span></div>
         </div>
@@ -458,11 +459,11 @@ body {
     <!-- P2 -->
     <div class="flow-node cnode" id="p2" onclick="toggle('p2')">
       <div class="node-trigger">
-        <div class="node-badge badge-c">P2</div>
+        <div class="node-badge badge-logistics">🚚</div>
         <div class="node-text">
-          <div class="node-title">Import & Customs</div>
+          <div class="node-title" style="color:#1a7a3c;">Import & Customs</div>
           <div class="node-sub">Broker agreement → customs invoice → broker fee payment → transport docs</div>
-          <div class="node-owners"><span class="owner-tag ot-ie">IE / Import-Export</span></div>
+          <div class="node-owners"><span class="owner-tag ot-ie">IE Team</span></div>
         </div>
         <div class="node-dots">
           <div class="dim-dot dd-c"></div><div class="dim-dot dd-i"></div>
@@ -500,9 +501,9 @@ body {
     <!-- P3 -->
     <div class="flow-node pnode" id="p3" onclick="toggle('p3')">
       <div class="node-trigger">
-        <div class="node-badge badge-p">P3</div>
+        <div class="node-badge badge-invoice">🧾</div>
         <div class="node-text">
-          <div class="node-title">Customs Duty & Import VAT Invoice</div>
+          <div class="node-title" style="color:#c0521a;">Customs Duty & Import VAT Invoice</div>
           <div class="node-sub">Official customs invoice; supports VAT input credit and cost deduction</div>
           <div class="node-owners"><span class="owner-tag ot-ap">AP Team</span></div>
         </div>
@@ -527,9 +528,9 @@ body {
     <!-- P4 -->
     <div class="flow-node pnode" id="p4" onclick="toggle('p4')">
       <div class="node-trigger">
-        <div class="node-badge badge-p">P4</div>
+        <div class="node-badge badge-logistics">🚚</div>
         <div class="node-text">
-          <div class="node-title">Goods Receipt & Invoice Booking</div>
+          <div class="node-title" style="color:#1a7a3c;">Goods Receipt & Invoice Booking</div>
           <div class="node-sub">PO / GR / IR matching + logistics service provider invoice & payment</div>
           <div class="node-owners"><span class="owner-tag ot-wh">Warehouse</span><span class="owner-tag ot-ap">AP Team</span><span class="owner-tag ot-ic">ICO</span></div>
         </div>
@@ -577,11 +578,11 @@ body {
     <!-- P5 -->
     <div class="flow-node pnode" id="p5" onclick="toggle('p5')">
       <div class="node-trigger">
-        <div class="node-badge badge-p">P5</div>
+        <div class="node-badge badge-payment">💰</div>
         <div class="node-text">
-          <div class="node-title">Vendor Payment</div>
+          <div class="node-title" style="color:#7d3c98;">Vendor Payment</div>
           <div class="node-sub">Payment to goods supplier</div>
-          <div class="node-owners"><span class="owner-tag ot-ic">ICO</span></div>
+          <div class="node-owners"><span class="owner-tag ot-ic">ICO</span><span class="owner-tag ot-ap">AP Team</span></div>
         </div>
         <div class="node-dots">
           <div class="dim-dot dd-n"></div><div class="dim-dot dd-n"></div>
@@ -608,12 +609,12 @@ body {
 
 <div class="legend">
   <div class="legend-title">Department Responsible</div>
-  <span class="owner-tag ot-tax">Tax (self-query)</span>
+  <span class="owner-tag ot-tax">Tax Team</span>
   <span class="owner-tag ot-cs">Customer Service</span>
   <span class="owner-tag ot-wh">Warehouse</span>
   <span class="owner-tag ot-ap">AP Team</span>
   <span class="owner-tag ot-i2c">I2C Team</span>
-  <span class="owner-tag ot-ie">IE / Import-Export</span>
+  <span class="owner-tag ot-ie">IE Team</span>
   <span class="owner-tag ot-ic">ICO</span>
   <span class="owner-tag ot-cs">Planner</span>
 
