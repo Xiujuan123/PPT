@@ -78,22 +78,23 @@ body {
 /* ══ CENTER COLUMN ══ */
 .center-col {
   display: flex; flex-direction: column; align-items: center;
-  padding-top: 56px;
+  padding-top: 0;
 }
 .sku-bridge {
   background: #fff;
   border: 1.5px dashed rgba(26,95,171,0.4);
-  border-radius: 12px;
-  padding: 14px 10px;
+  border-radius: 10px;
+  padding: 6px 8px;
   display: flex; flex-direction: column; align-items: center;
-  gap: 5px; text-align: center;
+  gap: 3px; text-align: center;
   box-shadow: 0 1px 5px rgba(13,42,74,0.07);
 }
-.sku-icon  { font-size: 20px; }
-.sku-label { font-size: 9.5px; font-weight: 700; color: #1A5FAB; letter-spacing: 0.5px; text-transform: uppercase; }
-.sku-arrows { font-size: 13px; color: #1A5FAB; opacity: 0.55; }
-.sku-sub   { font-size: 9px; color: #7a9ab8; line-height: 1.4; }
-.center-line { width: 2px; flex: 1; min-height: 40px; background: linear-gradient(180deg,#99aabb33,transparent); }
+.sku-icon  { font-size: 16px; }
+.sku-label { font-size: 8.5px; font-weight: 700; color: #1A5FAB; letter-spacing: 0.5px; text-transform: uppercase; }
+.sku-arrows { font-size: 11px; color: #1A5FAB; opacity: 0.55; }
+.sku-sub   { display: none; }
+.center-line { width: 2px; flex: 1; min-height: 0; background: linear-gradient(180deg,#99aabb33,transparent); }
+.center-col .center-line:first-child { display: none; }
 
 /* ══ FLOW NODE ══ */
 .flow-node {
@@ -435,7 +436,7 @@ body {
         <div class="node-badge badge-contract">📄</div>
         <div class="node-text">
           <div class="node-title" style="color:#1A5FAB;">Purchase Order (PO)</div>
-          <div class="node-sub">Linked to same SKU on sales invoice; price must align with customs value</div>
+          <div class="node-sub">Linked to same SKU on sales invoice</div>
           <div class="node-owners"><span class="owner-tag ot-cs">Planner</span></div>
         </div>
         <div class="node-dots">
@@ -448,7 +449,7 @@ body {
         <div class="dim-grid">
           <div class="dim-block db-c">
             <div class="dim-label"><span class="dim-label-dot" style="background:#1A5FAB"></span>Contract</div>
-            <div class="doc-line"><span class="doc-line-icon">🛒</span><div><div class="doc-line-name">Purchase Order (PO)</div><div class="doc-line-note">Supplier name, PO no., item, qty, price — must align with customs declared value</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">🛒</span><div><div class="doc-line-name">Purchase Order (PO)</div><div class="doc-line-note">Supplier name, PO no., item, qty, price</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
           </div>
         </div>
       </div>
@@ -475,22 +476,22 @@ body {
         <div class="dim-grid">
           <div class="dim-block db-c">
             <div class="dim-label"><span class="dim-label-dot" style="background:#1A5FAB"></span>Contract</div>
-            <div class="doc-line"><span class="doc-line-icon">🏢</span><div><div class="doc-line-name">Customs Broker Service Agreement</div><div class="doc-line-note">Broker qualification certificate and service contract</div><div class="doc-line-tags"><span class="dtag dtag-cond">Optional</span></div></div></div>
-            <div class="doc-line"><span class="doc-line-icon">🛃</span><div><div class="doc-line-name">Customs Declaration Form (报关单)</div><div class="doc-line-note">China Customs-stamped; HS code, declared value, duty rate — must match PO. <span style="color:#c0521a;font-weight:700">For 2118:</span> given the volume of SKUs and age of transactions, the tax authority accepts a representative sample — however at least some declarations must be provided; a complete zero submission is not acceptable.</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">🏢</span><div><div class="doc-line-name">Customs Broker Service Agreement</div><div class="doc-line-tags"><span class="dtag dtag-cond">Optional</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">🛃</span><div><div class="doc-line-name">Customs Declaration Form (报关单)</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
           </div>
           <div class="dim-block db-i">
             <div class="dim-label"><span class="dim-label-dot" style="background:#d35400"></span>Invoice</div>
-            <div class="doc-line"><span class="doc-line-icon">🧾</span><div><div class="doc-line-name">Customs Broker Service Fee Invoice</div><div class="doc-line-note">VAT invoice from broker for clearance service; must match payment amount</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">🧾</span><div><div class="doc-line-name">Customs Broker Service Fee Invoice</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
           </div>
           <div class="dim-block db-p">
             <div class="dim-label"><span class="dim-label-dot" style="background:#7d3c98"></span>Payment</div>
-            <div class="doc-line"><span class="doc-line-icon">💳</span><div><div class="doc-line-name">Broker Fee Payment Record</div><div class="doc-line-note">Bank proof of service fee paid to customs broker</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
-            <div class="doc-line"><span class="doc-line-icon">📊</span><div><div class="doc-line-name">Broker Reconciliation Statement</div><div class="doc-line-note">Statement confirming all charges are settled</div><div class="doc-line-tags"><span class="dtag dtag-cond">Request from broker</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">💳</span><div><div class="doc-line-name">Broker Fee Payment Record</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">📊</span><div><div class="doc-line-name">Broker Reconciliation Statement</div><div class="doc-line-tags"><span class="dtag dtag-cond">Request from broker</span></div></div></div>
           </div>
           <div class="dim-block db-l">
             <div class="dim-label"><span class="dim-label-dot" style="background:#1a7a3c"></span>Logistics</div>
-            <div class="doc-line"><span class="doc-line-icon">🚢</span><div><div class="doc-line-name">Bill of Lading (B/L) or Airway Bill (AWB)</div><div class="doc-line-note">Original transport document proving shipment from overseas supplier</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
-            <div class="doc-line"><span class="doc-line-icon">🚛</span><div><div class="doc-line-name">Port-to-Warehouse Inland Delivery Record</div><div class="doc-line-note">Domestic leg waybill and delivery confirmation after clearance</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">🚢</span><div><div class="doc-line-name">Bill of Lading (B/L) or Airway Bill (AWB)</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">🚛</span><div><div class="doc-line-name">Port-to-Warehouse Inland Delivery Record</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
           </div>
         </div>
       </div>
@@ -504,7 +505,6 @@ body {
         <div class="node-badge badge-invoice">🧾</div>
         <div class="node-text">
           <div class="node-title" style="color:#c0521a;">Customs Duty & Import VAT Invoice</div>
-          <div class="node-sub">Official customs invoice; supports VAT input credit and cost deduction</div>
           <div class="node-owners"><span class="owner-tag ot-ap">AP Team</span></div>
         </div>
         <div class="node-dots">
@@ -517,7 +517,7 @@ body {
         <div class="dim-grid">
           <div class="dim-block db-i">
             <div class="dim-label"><span class="dim-label-dot" style="background:#d35400"></span>Invoice</div>
-            <div class="doc-line"><span class="doc-line-icon">🧾</span><div><div class="doc-line-name">Customs Duty & Import VAT Invoice</div><div class="doc-line-note">Official invoice from China Customs; supports input VAT credit and cost deduction</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">🧾</span><div><div class="doc-line-name">Customs Duty & Import VAT Invoice</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
           </div>
         </div>
       </div>
@@ -546,7 +546,7 @@ body {
         <div class="dim-grid">
           <div class="dim-block db-i">
             <div class="dim-label"><span class="dim-label-dot" style="background:#d35400"></span>Invoice</div>
-            <div class="doc-line"><span class="doc-line-icon">📋</span><div><div class="doc-line-name">Inventory Receipt (IR) Booking Record</div><div class="doc-line-note">ICO system record: item, qty, cost, posting date — links PO receipt to stock movement</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span><span class="dtag dtag-sys">ICO</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">📋</span><div><div class="doc-line-name">Inventory Receipt (IR) Booking Record</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span><span class="dtag dtag-sys">ICO</span></div></div></div>
           </div>
           <div class="dim-block db-l">
             <div class="dim-label"><span class="dim-label-dot" style="background:#1a7a3c"></span>Logistics</div>
@@ -558,7 +558,7 @@ body {
         <div class="dim-grid">
           <div class="dim-block db-c">
             <div class="dim-label"><span class="dim-label-dot" style="background:#1A5FAB"></span>Contract</div>
-            <div class="doc-line"><span class="doc-line-icon">📄</span><div><div class="doc-line-name">Logistics Service Agreement</div><div class="doc-line-note">Signed contract with logistics service provider covering inbound handling and delivery</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">📄</span><div><div class="doc-line-name">Logistics Service Agreement</div><div class="doc-line-note">Signed contract with logistics service provider covering inbound handling and delivery</div><div class="doc-line-tags"><span class="dtag dtag-cond">Optional</span></div></div></div>
           </div>
           <div class="dim-block db-i">
             <div class="dim-label"><span class="dim-label-dot" style="background:#d35400"></span>Invoice</div>
@@ -594,8 +594,8 @@ body {
         <div class="dim-grid">
           <div class="dim-block db-p">
             <div class="dim-label"><span class="dim-label-dot" style="background:#7d3c98"></span>Payment</div>
-            <div class="doc-line"><span class="doc-line-icon">💳</span><div><div class="doc-line-name">Bank Remittance Advice</div><div class="doc-line-note">Bank-stamped outbound payment record — payee, amount, date, bank reference; must match supplier invoice</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
-            <div class="doc-line"><span class="doc-line-icon">📊</span><div><div class="doc-line-name">Vendor AP Reconciliation Statement</div><div class="doc-line-note">Vendor confirmation of payment history and outstanding balance</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">💳</span><div><div class="doc-line-name">Bank Payment</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
+            <div class="doc-line"><span class="doc-line-icon">📊</span><div><div class="doc-line-name">Vendor AP Reconciliation Statement</div><div class="doc-line-tags"><span class="dtag dtag-req">Required</span></div></div></div>
           </div>
         </div>
       </div>
@@ -618,6 +618,76 @@ body {
   <span class="owner-tag ot-ic">ICO</span>
   <span class="owner-tag ot-cs">Planner</span>
 
+</div>
+
+<!-- ████ RECORD RETENTION PAGE ████ -->
+<div style="margin-top:40px; padding:32px 0 52px;">
+<div class="page-wrap">
+
+<div class="page-header">
+  <div class="page-badge">Tax Team — Audit Walk-through</div>
+  <h1 class="page-title">Document <span>Retention Summary</span></h1>
+  <p class="page-desc">Overview of where documents are held and current status by entity (2118 / 1618).</p>
+</div>
+
+<div style="max-width:1100px; margin:0 auto; background:#fff; border-radius:12px; border:1.5px solid rgba(26,95,171,0.15); box-shadow:0 2px 8px rgba(13,42,74,0.07); overflow:hidden;">
+  <table style="width:100%; font-size:11px; border-collapse:collapse;">
+    <thead>
+      <tr style="background:#f4f6f9;">
+        <th style="text-align:left; padding:10px 16px; color:#4a6a8a; font-weight:700; border-bottom:2px solid #e0e8f0; width:22%;">Document</th>
+        <th style="text-align:left; padding:10px 16px; color:#4a6a8a; font-weight:700; border-bottom:2px solid #e0e8f0; width:14%;">Custodian</th>
+        <th style="text-align:left; padding:10px 16px; color:#1A5FAB; font-weight:700; border-bottom:2px solid #e0e8f0; width:32%;">1618 Status</th>
+        <th style="text-align:left; padding:10px 16px; color:#1A5FAB; font-weight:700; border-bottom:2px solid #e0e8f0; width:32%;">2118 Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #f0f4f8;">
+        <td style="padding:11px 16px; font-weight:600; color:#0D2A4A;">🧾 Sales Invoice</td>
+        <td style="padding:11px 16px; color:#5a7a9a;">Tax Team</td>
+        <td style="padding:11px 16px; color:#149B5F; font-weight:600;">✔ All historical records available</td>
+        <td style="padding:11px 16px; color:#149B5F; font-weight:600;">✔ All historical records available</td>
+      </tr>
+      <tr style="border-bottom:1px solid #f0f4f8; background:#fafbfc;">
+        <td style="padding:11px 16px; font-weight:600; color:#0D2A4A;">📄 PO / SO (Contract)</td>
+        <td style="padding:11px 16px; color:#5a7a9a;">CE &amp; Planner</td>
+        <td style="padding:11px 16px; color:#149B5F; font-weight:600;">✔ Fully accessible via SAP</td>
+        <td style="padding:11px 16px; color:#149B5F; font-weight:600;">✔ Fully accessible via SAP</td>
+      </tr>
+      <tr style="border-bottom:1px solid #f0f4f8;">
+        <td style="padding:11px 16px; font-weight:600; color:#0D2A4A;">🛃 Broker Agreement, Statement, CDF, B/L</td>
+        <td style="padding:11px 16px; color:#5a7a9a;">IE Team</td>
+        <td style="padding:11px 16px; color:#149B5F; font-weight:600;">✔ All historical records available</td>
+        <td style="padding:11px 16px; color:#c0392b; font-weight:600;">⚠ 2019 onwards only<br><span style="font-weight:400;color:#8a6a4a;">Pre-2019 records not retained</span></td>
+      </tr>
+      <tr style="border-bottom:1px solid #f0f4f8; background:#fafbfc;">
+        <td style="padding:11px 16px; font-weight:600; color:#0D2A4A;">🧾 Customs VAT Invoice (海关缴款通知书)</td>
+        <td style="padding:11px 16px; color:#5a7a9a;">AP Team</td>
+        <td style="padding:11px 16px; color:#c0392b; font-weight:600;">⚠ Gap 2019–2023<br><span style="font-weight:400;color:#8a6a4a;">Paper copies held; Single Window retains 3 years only → electronic gap 2019–2023</span></td>
+        <td style="padding:11px 16px; color:#c0392b; font-weight:600;">⚠ Partial records only<br><span style="font-weight:400;color:#8a6a4a;">Pre-2018: paper copies available. 2018–2024: electronic records not available. From 2025: new customs registration code applied.</span></td>
+      </tr>
+      <tr style="border-bottom:1px solid #f0f4f8; background:#fafbfc;">
+        <td style="padding:11px 16px; font-weight:600; color:#0D2A4A;">📦 Outbound DN / Inbound DN</td>
+        <td style="padding:11px 16px; color:#5a7a9a;">Warehouse</td>
+        <td style="padding:11px 16px; color:#149B5F; font-weight:600;">✔ All records available</td>
+        <td style="padding:11px 16px; color:#149B5F; font-weight:600;">✔ All records available</td>
+      </tr>
+      <tr style="border-bottom:1px solid #f0f4f8;">
+        <td style="padding:11px 16px; font-weight:600; color:#0D2A4A;">📋 IR &amp; Invoice Clearing</td>
+        <td style="padding:11px 16px; color:#5a7a9a;">ICO &amp; AP Team</td>
+        <td style="padding:11px 16px; color:#149B5F; font-weight:600;">✔ All records available</td>
+        <td style="padding:11px 16px; color:#149B5F; font-weight:600;">✔ All records available</td>
+      </tr>
+      <tr>
+        <td style="padding:11px 16px; font-weight:600; color:#0D2A4A;">💰 Bank Payment Records</td>
+        <td style="padding:11px 16px; color:#5a7a9a;">I2C Team</td>
+        <td style="padding:11px 16px; color:#149B5F; font-weight:600;">✔ All records available</td>
+        <td style="padding:11px 16px; color:#149B5F; font-weight:600;">✔ All records available</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
 </div>
 
 </div>
